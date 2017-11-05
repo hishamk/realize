@@ -2,11 +2,12 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"gopkg.in/urfave/cli.v2"
 	"os"
 	"path/filepath"
-	"time"
 	"reflect"
+	"time"
 )
 
 // Tool options customizable, should be moved in Cmd
@@ -80,7 +81,7 @@ func (r *realize) add(p *cli.Context) error {
 		Args: params(p),
 		Watcher: Watch{
 			Paths:  []string{"/"},
-			Ignore: []string{".git",".realize","vendor"},
+			Ignore: []string{".git", ".realize", "vendor"},
 			Exts:   []string{"go"},
 		},
 	}
@@ -97,7 +98,7 @@ func (r *realize) run(p *cli.Context) error {
 	// check projects and remove duplicates
 	if len(r.Schema) > 0 {
 		r.clean()
-	}else{
+	} else {
 		return errors.New("there are no projects")
 	}
 	// set gobin
@@ -107,6 +108,7 @@ func (r *realize) run(p *cli.Context) error {
 	}
 	// loop projects
 	if p.String("name") != "" {
+		fmt.Println("HELLLO", p.String("name"))
 		wg.Add(1)
 	} else {
 		wg.Add(len(r.Schema))
@@ -114,12 +116,13 @@ func (r *realize) run(p *cli.Context) error {
 	for k, elm := range r.Schema {
 		// command start using name flag
 		if p.String("name") != "" && r.Schema[k].Name != p.String("name") {
+			fmt.Println("Boom!", r.Schema[k].Name)
 			continue
 		}
 		// validate project path, if invalid get wdir or clean current
-		if !filepath.IsAbs(elm.Path){
+		if !filepath.IsAbs(elm.Path) {
 			r.Schema[k].Path = wdir()
-		}else{
+		} else {
 			r.Schema[k].Path = filepath.Clean(elm.Path)
 		}
 		// env variables

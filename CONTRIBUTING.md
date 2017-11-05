@@ -11,7 +11,7 @@ The following is a set of guidelines for contributing to this node package. Thes
 [How Can I Contribute?](#how-can-i-contribute)
 
 ## Code of Conduct
-This project and everyone participating in it is governed by following best pratices:
+This project and everyone participating in it is governed by following best practices:
 
 * Using welcoming and inclusive language
 * Being respectful of differing viewpoints and experiences
